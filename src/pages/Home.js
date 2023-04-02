@@ -1,35 +1,29 @@
 "use client";
-import Error from "@/app/error";
 import Banner from "@/components/Banner";
 import Button from "@/components/Button";
 import Card from "@/components/Card";
-import React, { useState } from "react";
-import { Parallax, ParallaxProvider } from "react-scroll-parallax";
+import React, { useEffect, useState } from "react";
+import { ParallaxProvider } from "react-scroll-parallax";
 import tw from "tailwind-styled-components";
+import useSWR from "swr";
+import { fetcher } from "@/data/fatcher";
 
 const Home = () => {
   const [selectedButton, setSelectedButton] = useState("Pizza");
-  const getResponse = async ({ keyword }) => {
-    console.log(keyword);
-    const response = await fetch({
-      url: `https://www.themealdb.com/api/json/v1/1/searchxzczx.php?s=${keyword}`,
-      method: "get",
-    });
-    if (!response.ok) {
-      throw new Error("something went wrong");
+  const [mealData, setMealData] = useState([]);
+  const { data, isLoading, error } = useSWR(
+    `https://www.themealdb.com/api/json/v1/1/search.php?s=${selectedButton}`,
+    fetcher
+  );
+  useEffect(() => {
+    if (!isLoading && !error && data) {
+      setMealData(data.meals);
     }
-    return response.json();
-  };
+  }, [isLoading, data, error, selectedButton]);
 
-  async function getData() {
-    const response = await getResponse("pizza");
-    console.log(response);
-  }
-
-  getData();
   return (
-    <ParallaxProvider>
-      <HomeContainer>
+    <HomeContainer>
+      <ParallaxProvider>
         <Banner />
         <BodyContainer>
           <Title>Welcome to Simple House</Title>
@@ -58,16 +52,18 @@ const Home = () => {
           </ButtonContainer>
         </BodyContainer>
         <Wrapper>
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
+          {mealData.map((meal) => {
+            return (
+              <Card
+                title={meal.strMeal}
+                key={meal.idMeal}
+                imageUrl={meal.strMealThumb}
+              />
+            );
+          })}
         </Wrapper>
-      </HomeContainer>
-    </ParallaxProvider>
+      </ParallaxProvider>
+    </HomeContainer>
   );
 };
 
@@ -78,7 +74,12 @@ w-full
 bg-white
 `;
 
-const BodyContainer = tw.div``;
+const BodyContainer = tw.div`
+flex
+flex-col
+items-center
+
+`;
 const Title = tw.h1`
 text-center
 sm:text-4xl
@@ -99,18 +100,17 @@ const ButtonContainer = tw.div`
 flex
 items-center
 justify-center
-
+self-center
 `;
 
 const Wrapper = tw.div`
-grid
-grid-cols-4
-gap-8
-justify-self-center
-align-middle
+flex
 sm:w-4/5
-place-self-center
-mx-auto
+w-full
 mt-9
+mx-auto
+flex-wrap
+items-center
+justify-center
 
 `;

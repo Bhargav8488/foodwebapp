@@ -27,4 +27,5 @@ transition-colors
 duration-500
 hover:bg-[#2f956d]
 hover:text-white
+w-28
 `;
