@@ -28,4 +28,5 @@ duration-500
 hover:bg-[#2f956d]
 hover:text-white
 w-28
+my-3
 `;

@@ -1,29 +1,26 @@
 "use client";
 import Image from "next/image";
-import Link from "next/link";
 import React, { useState } from "react";
 import { ParallaxBanner } from "react-scroll-parallax";
 import tw from "tailwind-styled-components";
 import MenuItem from "./MenuItem";
 
-const Banner = () => {
-  const [selectedText, setSelectedText] = useState("Home");
-
+const Banner = ({ selectedText, setSelectedText }) => {
   return (
     <BannerContainer>
       <ParallaxBanner
         layers={[{ image: "/images/banner.jpg", speed: -15 }]}
         className="h-[100%]"
       />
-      <Menu>
-        <Logo>
+      <Menu className="headerContainer">
+        <Logo className="logoContainer">
           <Image src={"/images/logo.png"} width={60} height={60} alt="logo" />
           <div className="ml-2">
             <AppTitle>Simple House</AppTitle>
             <SmallTitle>new restaurant template</SmallTitle>
           </div>
         </Logo>
-        <MenuList>
+        <MenuList className="menuListContainer">
           <MenuItem
             title={"Home"}
             address="/"
@@ -32,13 +29,7 @@ const Banner = () => {
           />
           <MenuItem
             title={"About"}
-            address="/"
-            selectedText={selectedText}
-            setSelectedText={setSelectedText}
-          />
-          <MenuItem
-            title={"Contact Us"}
-            address="/"
+            address="/about"
             selectedText={selectedText}
             setSelectedText={setSelectedText}
           />
@@ -56,12 +47,7 @@ h-[460px]
 relative
 overflow-hidden
 `;
-const BGImage = tw.img`
-w-full
-h-[100%]
-object-cover
-absolute
-`;
+
 const Menu = tw.div`
 absolute
 bottom-8

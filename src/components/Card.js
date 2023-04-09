@@ -46,4 +46,3 @@ text-center
 text-sm
 sm:text-2xl
 `;
-const Details = tw.p``;

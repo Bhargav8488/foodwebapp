@@ -10,3 +10,36 @@
 html body {
   background-color: #cccccc;
 }
+
+@media screen and (max-width: 490px) {
+  .headerContainer {
+    display: flex;
+    flex-direction: column;
+  }
+  .menuListContainer {
+    margin-left: auto;
+    margin-top: 20px;
+  }
+  .logoContainer {
+    margin-right: auto;
+  }
+}
+
+@media screen and (max-width: 390px) {
+  .buttonContainer {
+    flex-direction: column;
+  }
+}
+
+@media screen and (max-width: 670px) {
+  .staffCardContainer {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin-left: 0;
+  }
+  .iconGroup {
+    justify-content: center;
+  }
+}

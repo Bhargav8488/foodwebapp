@@ -4,7 +4,7 @@ const nextConfig = {
     appDir: true,
   },
   images: {
-    domains: ["www.themealdb.com"],
+    domains: ["www.themealdb.com", "templatemo.com"],
   },
 };
 
